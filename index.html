@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>MindCode - To Do List App</title>
+    <!--Style CSS-->
+    <link rel="stylesheet" type="text/css" href="./css/style.css">
+    <!--Font Awesome-->
+    <script src="https://kit.fontawesome.com/58c378b9ed.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div class="loader dflex">
+        <div class="circle"></div>
+    </div>
+    <div class="overlay"></div>
+    <div class="btnAdd dflex"><img src="./images/plus.png" alt="">
+        <div class="addPlus">
+            Add<i class="fas fa-plus"></i></div>
+    </div>
+    <div class="form-delele dflex">
+        <div class="form dflex"><i class="fas fa-trash-alt"></i>
+            <h3>Are you sure ?</h3>
+            <div class="dflex">
+                <button class="btn" id="yes">Yes</button>
+                <button class="btn" id="no">No</button>
+            </div>
+        </div>
+    </div>
+    <div class="form-add-edit dflex">
+        <div class="form dflex"><i class="fas fa-edit"></i>
+            <div class="field">
+                <label for="mail">Mail</label>
+                <input type="text" id="mail" placeholder="Mail">
+            </div>
+            <div class="field">
+                <label for="des">Description</label>
+                <input type="text" id="des" placeholder="Description">
+            </div>
+            <div class="field">
+                <label for="author">Author</label>
+                <input type="text" id="author" placeholder="Author">
+            </div>
+            <div class="field dflex">
+                <button id="complete">Complete</button>
+                <button id="cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+    <nav class="dflexs">
+        <div class="nav__btn"><i class="fas fa-bars"></i></div>
+        <div class="nav__logo"><img src="./images/logo.png" alt=""></div>
+        <div class="nav__search dflexs"><i class="fas fa-search"></i>
+            <input type="text" id="search" placeholder="Search">
+        </div>
+        <div class="nav__tools dflex"><i class="fas fa-th"></i>
+            <i class="fas fa-user-secret"></i>
+        </div>
+    </nav>
+    <div class="header dflexs">
+        <div class="header__item">
+            <i class="fas fa-arrow-left"></i>Mail </div>
+        <div class="header__item"><i class="fab fa-google"></i>
+            <i class="fas fa-cloud-download-alt"></i>
+            <i class="fab fa-google-drive"></i>
+            <i class="fas fa-ellipsis-v"></i>
+        </div>
+    </div>
+    <div class="main dflexs">
+        <div class="sidebar col-lg-2">
+            <div class="sidebar__item active"><i class="fas fa-image"></i><span>Inbox</span></div>
+            <div class="sidebar__item"><i class="fas fa-star"></i><span>Starred</span></div>
+            <div class="sidebar__item"><i class="fas fa-clock"></i><span>Snoozed</span></div>
+            <div class="sidebar__item"><i class="fas fa-paper-plane"></i><span>Sent</span></div>
+            <div class="sidebar__item"><i class="fas fa-file"></i><span>Drafts</span></div>
+            <div class="sidebar__item"><i class="fas fa-tag"></i><span>Notes</span></div>
+            <div class="sidebar__item"><i class="fas fa-angle-down"></i><span>More</span></div>
+            <div class="sidebar__item"><img src="./images/LogoMindCode.png" alt=""></div>
+        </div>
+        <div class="table col-lg-10 col-12">
+            <table>
+                <thead>
+                    <tr>
+                        <th data-col="id" data-sort="desc">ID<i class="fas fa-caret-down"></i></th>
+                        <th data-col="mail" data-sort="desc">Mail<i class="fas fa-caret-down"></i></th>
+                        <th data-col="des" data-sort="desc">Description<i class="fas fa-caret-down"></i></th>
+                        <th data-col="author" data-sort="desc">Author<i class="fas fa-caret-down"></i></th>
+                        <th>Edit</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="./js/script.js"></script>
+</body>
+
+</html>
