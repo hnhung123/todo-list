@@ -28,7 +28,7 @@ window.onload = (() => {
                     document.querySelector('tbody').appendChild(eleMail);
                 });
             };
-            //Add - Edit - Popup
+
             let addBtn = document.querySelector('.btnAdd');
             let editPopup = document.querySelector('.form-add-edit');
             let completeBtn = editPopup.querySelector('#complete');
@@ -40,6 +40,7 @@ window.onload = (() => {
             let loader = document.querySelector('.loader');
             let currentFunc;
 
+            //*****Add  - Popup
             addBtn.addEventListener('click', () => {
                 currentFunc = 'add';
                 showPopup(editPopup)
@@ -107,7 +108,7 @@ window.onload = (() => {
                 };
                 let objMail = new objectMail(dataMail.length + 1, fieldMail.value, fieldDes.value, fieldAuthor.value);
                 dataMail.push(objMail);
-                localStorage.setItem('data', JSON.stringify(dataMail))
+                localStorage.setItem('data', JSON.stringify(dataMail)) // Convert [] => '[]'
             };
             //Create a new Constructor Function Mail
             function objectMail(id, mail, des, author) {
@@ -116,7 +117,8 @@ window.onload = (() => {
                 this.des = des;
                 this.author = author;
             }
-            //Delete  Popup
+
+            //*****Delete - Popup
             let delBtn = document.querySelectorAll('.trash');
             let delPopup = document.querySelector('.form-delele');
             let yesBtn = document.querySelector('#yes');
@@ -133,9 +135,23 @@ window.onload = (() => {
                 })
             }));
 
-            function deleteData() {
+            noBtn.addEventListener('click', () => {
+                hidePopup(delPopup)
+            });
 
+            function deleteData(index) {
+                dataMail = JSON.parse(localStorage.getItem('data')); // Convert '[]'=> [] -- convert string thanh object
+                console.log(JSON.parse(JSON.stringify(dataMail)));
+                dataMail.splice(index, 1);
+                console.log(dataMail);
+                dataMail.forEach((item, index) => {
+                    return item.id = index + 1;
+                });
+                localStorage.setItem('data', JSON.stringify(dataMail)); //Convert [] => '[]'
+                location.reload();
             }
+
+            //*****
         }
     }
 
