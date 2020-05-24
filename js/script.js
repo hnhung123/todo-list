@@ -24,7 +24,6 @@ window.onload = (() => {
                         <td class="trash"><i class="fas fa-trash-alt"></i></td>
                     `;
                     eleMail.innerHTML = contentMail;
-                    console.log(contentMail);
                     document.querySelector('tbody').appendChild(eleMail);
                 });
             };
@@ -151,7 +150,113 @@ window.onload = (() => {
                 location.reload();
             }
 
-            //*****
+            //*****Display Pagination Button (Hien nut phan trang)
+            let currentPage = 1;
+            let dataSet = JSON.parse(localStorage.getItem('data'))
+
+            function createPageBtn() {
+
+
+            };
+            //Edit - popup
+            let editBtn = document.querySelectorAll('.edit');
+            editBtn.forEach((item, index) => item.addEventListener('click', () => {
+                currentFunc = 'edit';
+                showPopup(editPopup);
+                completeBtn.addEventListener('click', () => {
+                    validate();
+                    if (validate()) {
+                        loader.classList.add('active');
+                        setTimeout(() => {
+                            loader.classList.remove('active');
+                            if (currentFunc == 'edit') {
+                                editData(index)
+                            }
+                        }, 1000)
+                    }
+                })
+
+            }));
+
+            function editData(index) {
+                dataMail = JSON.parse(localStorage.getItem('data'));
+                dataMail[index].mail = fieldMail.value;
+                dataMail[index].des = fieldDes.value;
+                dataMail[index].author = fieldAuthor.value;
+
+                localStorage.setItem('data', JSON.stringify(dataMail));
+                location.reload()
+            };
+
+            //Search
+            let search = document.querySelector('.nav__search #search');
+            search.addEventListener('keyup', () => {
+                console.log(search.value);
+                searchData(search.value)
+
+            });
+
+            function searchData(searchValue) {
+                let items = document.querySelectorAll('tbody tr');
+                for (let i = 0; i < items.length; i++) {
+                    let value = items[i].querySelector('.title').textContent;
+                    if (value.toUpperCase().includes(searchValue.toUpperCase())) {
+                        items[i].style.cssText = 'display: table-row';
+                    } else {
+                        items[i].style.cssText = 'display:none';
+                    }
+                }
+            }
+
+            //Sort
+            let sort = document.querySelectorAll('[data-sort]');
+            sort.forEach((item, index) => item.addEventListener('click', () => {
+                    let order = item.dataset.sort;
+                    sort.forEach(i => i.classList.remove('active'));
+                    if (order == 'desc') {
+                        item.dataset.sort = 'asc';
+                        item.className = 'active asc';
+                        sortData(item.dataset.col, 'asc')
+                    } else {
+                        item.dataset.sort = 'desc';
+                        item.className = 'active desc';
+                        sortData(item.dataset.col, 'desc')
+                    }
+                }))
+                //Sort Data Function
+            function sortData(type, order) {
+                let typeSort = type;
+                arraySort = JSON.parse(localStorage.getItem('data'));
+                if (order == 'desc') {
+                    if (typeSort == 'id') {
+                        arraySort = arraySort.sort((a, b) => parseInt(a[typeSort]) > parseInt(b[typeSort]) ? 1 : -1)
+                    } else {
+                        arraySort = arraySort.sort((a, b) => a[typeSort].toLowerCase() > b[typeSort].toLowerCase() ? 1 : -1)
+                    }
+                } else {
+                    if (typeSort == 'id') {
+                        arraySort = arraySort.sort((a, b) => parseInt(a[typeSort]) > parseInt(b[typeSort]) ? 1 : -1);
+                    } else {
+                        arraySort = arraySort.sort((a, b) => a[typeSort].toLowerCase() < b[typeSort].toLowerCase() ? 1 : -1)
+                    }
+                }
+                let allItem = document.querySelectorAll('tbody tr');
+                let main = document.querySelector('tbody');
+                main.innerHTML = '';
+                let max = 0;
+                while (max <= allItem.length) {
+                    arraySort.forEach((items, indexes) => {
+                        allItem.forEach((item, index) => {
+                            let selfId = item.querySelector('.id').textContent;
+                            if (selfId == items.id) {
+                                main.appendChild(item);
+                                max++;
+                            }
+                        })
+                    })
+                };
+
+            }
         }
     }
 
