@@ -150,15 +150,56 @@ window.onload = (() => {
                 location.reload();
             }
 
-            //*****Display Pagination Button (Hien nut phan trang)
+            //*****Chức năng phân trang 
             let currentPage = 1;
+            let rows = 5;
             let dataSet = JSON.parse(localStorage.getItem('data'))
-
-            function createPageBtn() {
-
-
+            let table = document.querySelector('tbody');
+            let allItem = document.querySelectorAll('tbody tr');
+            // Hiện 5 dòng trong 1 trang
+            function displayArrayPagination(array, wrapper, rows_par_page, page) {
+                if (array == null) return;
+                wrapper.innerHTML = '';
+                page--;
+                let start = rows_par_page * page;
+                let end = start + rows_par_page;
+                let paginationArray = array.slice(start, end);
+                for (let i = 0; i < paginationArray.length; i++) {
+                    wrapper.appendChild(allItem[i + start])
+                }
             };
-            //Edit - popup
+            displayArrayPagination(dataSet, table, rows, currentPage)
+                // Hiện nút phân trang
+            function createPageBtn() {
+                if (dataSet == null) return;
+                let quality = Math.ceil(dataSet.length / rows);
+                let paginationGroup = document.createElement('ul');
+                paginationGroup.className = 'pagination';
+                document.querySelector('.table').appendChild(paginationGroup);
+                for (let i = 0; i < quality; i++) {
+                    let item = document.createElement('li');
+                    if (i === currentPage - 1) {
+                        item.classList.add('active')
+                    }
+                    item.innerHTML = i + 1;
+                    paginationGroup.appendChild(item)
+                }
+            };
+
+            createPageBtn()
+
+            // Click vào nút phân trang
+            let allPagBtn = document.querySelectorAll('.pagination li');
+
+            if (allPagBtn == null) return;
+
+            allPagBtn.forEach((item, index) => item.addEventListener('click', () => {
+                    allPagBtn.forEach(i => i.classList.remove('active'));
+                    item.classList.add('active');
+                    currentPage = index + 1;
+                    displayArrayPagination(dataSet, table, rows, currentPage)
+                }))
+                //Edit - popup
             let editBtn = document.querySelectorAll('.edit');
             editBtn.forEach((item, index) => item.addEventListener('click', () => {
                 currentFunc = 'edit';
